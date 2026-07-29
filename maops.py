@@ -30,13 +30,13 @@ class MapApp(ctk.CTk):
     def sea_location(self):
         address = self.sea_ent.get()
         if address:
-            new_pos = self.map_wid.set_address(address, marker=True)
+            self.map_wid.delete_all_marker()
+            new_pos = self.map_wid.set_address(address,marker=True)
             new_pos.set_text(address)
             a=new_pos.position
-            new_pos.set_position()
+            marker1=self.map_wid.set_marker(a[0],a[1])
         if new_pos:
             self.mark_list.append(new_pos)
-            self.map_wid.delete_all_marker()
             self.mark_list.clear()
 if __name__ == "__main__":
     app = MapApp()
