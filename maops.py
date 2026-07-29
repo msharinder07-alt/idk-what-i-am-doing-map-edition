@@ -14,8 +14,8 @@ class MapApp(ctk.CTk):
         self.si=ctk.CTkFrame(self,width=200)
         self.sidebar.grid(row=0, column=0, sticky="nsew", padx=0, pady=0)
         self.sidebar.grid_rowconfigure(4, weight=1) # Spacer row
-        self.title_label = ctk.CTkLabel(self.sidebar, text="Googl map", font=ctk.CTkFont(size=16, weight="bold"))
-        self.title_label.grid(row=0, column=0, padx=20, pady=20)
+        self.titl_label = ctk.CTkLabel(self.sidebar, text="Googl map", font=ctk.CTkFont(size=16, weight="bold"))
+        self.titl_label.grid(row=0, column=0, padx=20, pady=20)
         self.sea_ent = ctk.CTkEntry(self.sidebar, placeholder_text="Enter address")
         self.sea_ent.grid(row=1, column=0, padx=20, pady=10, sticky="ew")
         self.sea_ent.bind("<Return>", lambda e: self.sea_location())
@@ -28,13 +28,16 @@ class MapApp(ctk.CTk):
         self.map_wid.set_zoom(15)
         self.mark_list = []
     def sea_location(self):
-        address = self.sea_entry.get()
+        address = self.sea_ent.get()
         if address:
-            new_position = self.map_widget.set_address(address, marker=True)
-            if new_position:
-                self.mark_list.append(new_position)
-                self.map_wid.delete_all_marker()
-                self.mark_list.clear()
+            new_pos = self.map_wid.set_address(address, marker=True)
+            new_pos.set_text(address)
+            a=new_pos.position
+            new_pos.set_position()
+        if new_pos:
+            self.mark_list.append(new_pos)
+            self.map_wid.delete_all_marker()
+            self.mark_list.clear()
 if __name__ == "__main__":
     app = MapApp()
     app.mainloop()
